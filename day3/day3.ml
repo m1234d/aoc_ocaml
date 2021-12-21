@@ -65,12 +65,23 @@ let f2 () =
     if List.length(l) = 1 then l else
     let most_common = find_common (l) (i) (0) in
     let filter_func = if inv then 
-      (if most_common < 0 then (fun v -> v.[i] = '1') else (fun v -> v.[i] = '0'))
-    else (if most_common >= 0 then (fun v -> v.[i] = '1') else (fun v -> v.[i] = '0')) in
+      (
+        if most_common < 0 then
+          (fun v -> v.[i] = '1') 
+        else
+          (fun v -> v.[i] = '0')
+      )
+    else 
+      (
+        if most_common >= 0 then
+          (fun v -> v.[i] = '1')
+        else
+          (fun v -> v.[i] = '0')
+      ) in
     let new_data = List.filter ~f:(filter_func) (l) in
     process_data (new_data) (i+1) (inv)
-    
   in
+  
   let oxygen = match process_data (data) (0) (true) with
   | [] -> 0
   | fs :: _ ->
